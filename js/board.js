@@ -32,13 +32,27 @@ class Board {
     switch (this.tipeGame) {
       case 3:
         this.makeTablero(3,3);
+        this.makePlayerPieces(3,3);
         break;
       case 4:
         this.makeTablero(7,6);
+        this.makePlayerPieces(7,6);
         break;
       case 5:
         this.makeTablero(8,7);
+        this.makePlayerPieces(8,7);
         break;
     }
   }
+  makePlayerPieces(rows,cols){
+    let rowH = (this.canvasH - 30) / (rows);//calculo el diametro de las fichas
+    let radius = rowH / 2;//calculo el radio de las fichas
+    let posBoard= (this.canvasW-((rowH+5)*cols))/2;
+    //calculando la medida del tablero se cuanto espacio tengo para trabajar a cada lado de este
+    printText((posBoard/2),rowH,"J1");
+    let j1Piece= new Piece((posBoard/2),(rowH*2),radius,"j1");
+    printText((this.canvasW-(posBoard/2)),rowH,"J2");
+    let j2Piece= new Piece((this.canvasW-(posBoard/2)),(rowH*2),radius,"j2");
+  }
+
 }

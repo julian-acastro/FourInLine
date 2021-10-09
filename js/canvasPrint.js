@@ -30,5 +30,12 @@ function setUpCanvas() {
   let wh = [sizeWidth, sizeHeight];
   return wh;
 }
+function printText(xv, yv,text) {
+  ctx.beginPath();
+  ctx.fillStyle = "red"; //color de relleno
+  ctx.font = "bold 60px arial"; //estilo de texto
+  ctx.textAlign="center";
+  ctx.fillText(text, xv, yv); //texto con método fill
+  
 
-//window.onload = setUpCanvas();
+}
