@@ -1,10 +1,10 @@
 let game;//en esta variable se instancia el tablero
 let wh=[];//guardo el ancho y alto del canvas
 let colspos=[];//guardo el valor x final de cada columna
-let x=0;
-let y=0;
 let mouse = false;
 let turno = false;
+let fichaJ1;
+let fichaJ2;
 
 
 
@@ -24,10 +24,12 @@ btn5InLine.addEventListener("click", function (e) {
 });
 
 function createGame(tipeGame) {
+  
   modal.className += " hidden";
   wh = setUpCanvas();
   game = new Board(wh[0], wh[1], tipeGame);
-  
+  fichaJ2=game.j2Piece;
+  fichaJ1=game.j1Piece;
   //una vez instanciado el tablero lomapeamos para detectar las columnas
   colspos[0]=game.posBoard+game.colW;
   for(let i=1;i<game.cols;i++){
@@ -42,13 +44,11 @@ canvas.addEventListener('mousedown', function(evento){
   let rect=canvas.getBoundingClientRect();//devuelve el tamaño del canvas y su posición relativa respecto a la ventana de visualización
   let x=evento.clientX - rect.left;//posición x dentro del elemento.
   let y=evento.clientY - rect.top;//posición y dentro del elemento.
-
-  let xClick=evento.offsetX;//devuelve la coordenada x del cursor del mouse, relativa al elemento de destino.
-
-  if(xClick<game.posBoard || xClick>(wh[0]-game.posBoard)){ //aca van las coordenadas de las fichas de j1 y j2
-    
+ let ficha=fichaJ2;
+  let distance= Math.sqrt(((x-ficha.xv)*(x-ficha.xv)) + ((y-ficha.yv)*(y-ficha.yv)));
+  if(distance<=game.radius){ //aca van las coordenadas de las fichas de j1 y j2
         mouse = true;
-        console.log("sector jugadores");
+        console.log("piece of j1");
      
     }
   

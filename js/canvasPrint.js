@@ -9,14 +9,12 @@ function printLine(x1, y1, x2, y2, width, color) {
   ctx.stroke();
 }
 
-function printPieces(x1, y1, radius, color) {
-  ctx.beginPath();
-  ctx.arc(x1, y1, radius, 0, 2 * Math.PI);
-  ctx.strokeStyle = color;
-  ctx.fillStyle = color;
-  ctx.fill();
-  ctx.stroke();
-  
+function printPieces(x1, y1,rowH,name) {
+  let backgroundImg = new Image;
+  backgroundImg.src = "img/"+ name + ".png";
+  backgroundImg.onload = function(){//Dibuja una imagen gradiente en el lienzo
+  ctx.drawImage(backgroundImg,x1,y1,rowH,rowH);//ver coordenadas x e y
+}
 }
 
 function setUpCanvas() {
@@ -32,14 +30,14 @@ function setUpCanvas() {
   return wh;
 }
 
-/*function printBoard(){
+function printBoard(){
     let backgroundImg = new Image;
-    backgroundImg.src = "./img/background.jpg"
+    backgroundImg.src = "img/background.jpg"
     backgroundImg.onload = function(){//Dibuja una imagen gradiente en el lienzo
-    ctx.drawImage(backgroundImg,0,0);//ver coordenadas x e y
+    ctx.drawImage(backgroundImg,0,0,canvas.width,canvas.height);//ver coordenadas x e y
 
     }
-}*/
+}
 
 function printText(xv, yv,text) {
   ctx.beginPath();

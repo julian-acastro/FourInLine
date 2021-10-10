@@ -1,8 +1,8 @@
 class Piece {
-  constructor(xv, yv, radius, player) {
+  constructor(xv, yv, rowH, player) {
     this.xv = xv;
     this.yv = yv;
-    this.radius = radius;
+    this.rowH = rowH;
     this.player = player;
     this.printMe();
   }
@@ -15,16 +15,16 @@ class Piece {
   printMe() {
     switch (this.player) {
       case "none":
-        printPieces(this.xv, this.yv, this.radius, "#fff");//rellenar con imagenes
+        printPieces(this.xv, this.yv, this.rowH, this.player);//rellenar con imagenes
         break;
       case "j1":
-        printPieces(this.xv, this.yv, this.radius, "#FF2442");
+        printPieces(this.xv, this.yv, this.rowH, this.player);
         break;
       case "j2":
-        printPieces(this.xv, this.yv, this.radius, "#3DB2FF");
+        printPieces(this.xv, this.yv, this.rowH, this.player);
         break;
       case "winner":
-        printPieces(this.xv, this.yv, this.radius, "#aaa");
+        printPieces(this.xv, this.yv, this.rowH,this.player);
         break;
     }
   }
