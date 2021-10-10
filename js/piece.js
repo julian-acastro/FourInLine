@@ -6,15 +6,16 @@ class Piece {
     this.player = player;
     this.printMe();
   }
+  
   setPlayer(p) {
     this.player = p;
     this.printMe();
-    this.printMe();
+    //this.printMe();
   }
   printMe() {
     switch (this.player) {
       case "none":
-        printPieces(this.xv, this.yv, this.radius, "#fff");
+        printPieces(this.xv, this.yv, this.radius, "#fff");//rellenar con imagenes
         break;
       case "j1":
         printPieces(this.xv, this.yv, this.radius, "#FF2442");

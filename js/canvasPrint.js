@@ -16,6 +16,8 @@ function printPieces(x1, y1, radius, color) {
   ctx.fillStyle = color;
   ctx.fill();
   ctx.stroke();
+
+  
 }
 
 function setUpCanvas() {
@@ -29,6 +31,7 @@ function setUpCanvas() {
   canvas.height = sizeHeight;
   let wh = [sizeWidth, sizeHeight];
   return wh;
+  
 }
 function printText(xv, yv,text) {
   ctx.beginPath();
@@ -37,5 +40,14 @@ function printText(xv, yv,text) {
   ctx.textAlign="center";
   ctx.fillText(text, xv, yv); //texto con método fill
   
-
 }
+
+/*function printBackground(){
+
+    let backgroundImg = new Image;
+    backgroundImg.src = "./img/background.jpg"
+    backgroundImg.onload = function(){//Dibuja una imagen gradiente en el lienzo
+    ctx.drawImage(backgroundImg,0,0);//ver coordenadas x e y
+
+    }
+}*/
