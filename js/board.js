@@ -3,56 +3,49 @@ class Board {
     this.canvasW = canvasW;
     this.canvasH = canvasH;
     this.tipeGame = tipeGame;
-    this.matr = new Array(6);
-    this.makePieces();
-  }
-  getMatr(){
-      return this.matr;
-  }
-  makeTablero(cols,rows){
-    let rowH = (this.canvasH - 30) / (rows);//calculo el diametro de las fichas
-    let radius = rowH / 2;//calculo el radio de las fichas
-    let posBoard= (this.canvasW-((rowH+5)*cols))/2;
-    //ancho del cambas le resto el espacio q ocupa el tablero y lo divido por dos para centrarlo
-    let valX = radius + posBoard;
-    let valY = radius + 5;
-    for (let i = 0; i < cols; i++) {
-      this.matr[i] = new Array(7);
-      for (let j = 0; j < rows; j++) {
-        let obj = new Piece(valX, valY, radius, "none");
-        valY += (radius*2) + 2;
-        this.matr[i].push(obj);
-      }
-      valX += (radius*2) + 2; //aumento el valor de x pra comenzar la siguiente fila
-      valY = radius + 5;
-    }
-  }
-  makePieces() {
-    //un switch q setea el tablero segun el tipo de juego seleccionado por el usuario
-    switch (this.tipeGame) {
+    switch (tipeGame) {
       case 3:
-        this.makeTablero(3,3);
-        this.makePlayerPieces(3,3);
+        this.rows = 3;
+        this.cols = 3;
         break;
       case 4:
-        this.makeTablero(7,6);
-        this.makePlayerPieces(7,6);
+        this.rows = 6;
+        this.cols = 7;
         break;
       case 5:
-        this.makeTablero(8,7);
-        this.makePlayerPieces(8,7);
+        this.rows = 7;
+        this.cols = 8;
         break;
     }
+    this.rowH = (this.canvasH - 30) / this.rows; //calculo el diametro de las fichas
+    this.radius = this.rowH / 2; //calculo el radio de las fichas
+    this.posBoard = (this.canvasW - (this.rowH + 5) * this.cols) / 2;
+    //ancho del cambas le resto el espacio q ocupa el tablero y lo divido por dos para centrarlo.
+    this.matr = new Array();
+    this.makeTablero();
+    this.makePlayerPieces();
+
   }
-  makePlayerPieces(rows,cols){
-    let rowH = (this.canvasH - 30) / (rows);//calculo el diametro de las fichas
-    let radius = rowH / 2;//calculo el radio de las fichas
-    let posBoard= (this.canvasW-((rowH+5)*cols))/2;
-    //calculando la medida del tablero se cuanto espacio tengo para trabajar a cada lado de este
-    printText((posBoard/2),rowH,"J1");
-    let j1Piece= new Piece((posBoard/2),(rowH*2),radius,"j1");
-    printText((this.canvasW-(posBoard/2)),rowH,"J2");
-    let j2Piece= new Piece((this.canvasW-(posBoard/2)),(rowH*2),radius,"j2");
+  makeTablero() {
+    let valX = this.radius + this.posBoard;
+    let valY = this.radius + 5;
+    for (let i = 0; i < this.cols; i++) {
+      this.matr[i] = new Array(7);
+      for (let j = 0; j < this.rows; j++) {
+        let obj = new Piece(valX, valY, this.radius, "none");
+        valY += this.radius * 2 + 2;
+        this.matr[i].push(obj);
+      }
+      valX += this.radius * 2 + 2; //aumento el valor de x pra comenzar la siguiente fila
+      valY = this.radius + 5;//reinicio el valor de y para comenzar la siguiente iteracion
+    }
   }
 
+  makePlayerPieces() {
+    printText(this.posBoard / 2, this.rowH, "J1");
+    let j1Piece = new Piece(this.posBoard / 2,this.rowH * 2,this.radius,"j1");
+    printText(this.canvasW - this.posBoard / 2, this.rowH, "J2");
+    let j2Piece = new Piece(this.canvasW - this.posBoard / 2,this.rowH * 2,this.radius,"j2");
+    //
+  }
 }
