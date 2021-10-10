@@ -4,7 +4,8 @@ let colspos=[];//guardo el valor x final de cada columna
 let x=0;
 let y=0;
 let mouse = false;
-let player = false;//j1 false
+let turno = false;
+
 
 
 
@@ -21,10 +22,12 @@ let btn5InLine = document.getElementById("5InLine");
 btn5InLine.addEventListener("click", function (e) {
   createGame(5);
 });
+
 function createGame(tipeGame) {
   modal.className += " hidden";
   wh = setUpCanvas();
   game = new Board(wh[0], wh[1], tipeGame);
+  
   //una vez instanciado el tablero lomapeamos para detectar las columnas
   colspos[0]=game.posBoard+game.colW;
   for(let i=1;i<game.cols;i++){
@@ -34,14 +37,20 @@ function createGame(tipeGame) {
 
 
 
-//Ver que el click se de dentro de la ficha del jugador 
+//detectar que el click se de dentro de la ficha del jugador 
 canvas.addEventListener('mousedown', function(evento){
   let rect=canvas.getBoundingClientRect();//devuelve el tamaño del canvas y su posición relativa respecto a la ventana de visualización
   let x=evento.clientX - rect.left;//posición x dentro del elemento.
   let y=evento.clientY - rect.top;//posición y dentro del elemento.
-  console.log("valor del click en x:" +x);
-  console.log("valor del click en y"+y);
-  mouse = true;
+
+  let xClick=evento.offsetX;//devuelve la coordenada x del cursor del mouse, relativa al elemento de destino.
+
+  if(xClick<game.posBoard || xClick>(wh[0]-game.posBoard)){ //aca van las coordenadas de las fichas de j1 y j2
+    
+        mouse = true;
+        console.log("sector jugadores");
+     
+    }
   
 })
 
@@ -50,49 +59,27 @@ canvas.addEventListener('mousemove', function(evento){
       let x2=evento.clientX - rect.left;
       let y2=evento.clientY -rect.top;
       if(mouse===true){ 
-      drawLine(x,y,x2,y2);
+
       x=x2;
       y=y2;     
-      console.log(x2);
-      console.log(y2);  
+      //console.log(x);
+      //console.log(y);  
       }
 });
 
 canvas.addEventListener('mouseup', function(evento){
-  let rect=canvas.getBoundingClientRect();
-    if(mouse===true){
-        let x2=evento.clientX - rect.left;
-        let y2=evento.clienty -rect.top;
-        drawLine(x,y,x2,y2);
-        x=0;
-        y=0;
+
+  let xClick=evento.offsetX;
+    if(mouse===true && xClick>game.posBoard && xClick<(wh[0]-game.posBoard)){
+      for(let i=0;i<colspos.length;i++){
+        if(xClick<colspos[i]){
+          console.log("columna: " + (i+1));
+          break;
+        }
+      }
         mouse=false;
     }
-   
+    mouse=false;
   }
 );
 
-//Funcion que crea una secuencia de circulos entre 2 puntos de la pantalla
-function drawLine(x1,y1,x2,y2){
-  ctx.beginPath();
- 
-  ctx.moveTo(x1,y1);
-  ctx.lineTo(x2,y2);
-
-  ctx.closePath();
-}
-
-
-canvas.addEventListener("click",(e)=>{
-  let xClick=e.offsetX;
-  //console.log(xClick);
-  if(xClick>game.posBoard && xClick<(wh[0]-game.posBoard)){//si se encuentra dentro del tablero el click
-    for(let i=0;i<colspos.length;i++){
-      if(xClick<colspos[i]){
-        console.log("columna: " + (i+1));
-        break;
-      }
-    }
-  }
-  
-})

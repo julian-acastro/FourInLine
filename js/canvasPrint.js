@@ -16,7 +16,6 @@ function printPieces(x1, y1, radius, color) {
   ctx.fillStyle = color;
   ctx.fill();
   ctx.stroke();
-
   
 }
 
@@ -31,8 +30,17 @@ function setUpCanvas() {
   canvas.height = sizeHeight;
   let wh = [sizeWidth, sizeHeight];
   return wh;
-  
 }
+
+/*function printBoard(){
+    let backgroundImg = new Image;
+    backgroundImg.src = "./img/background.jpg"
+    backgroundImg.onload = function(){//Dibuja una imagen gradiente en el lienzo
+    ctx.drawImage(backgroundImg,0,0);//ver coordenadas x e y
+
+    }
+}*/
+
 function printText(xv, yv,text) {
   ctx.beginPath();
   ctx.fillStyle = "red"; //color de relleno
@@ -42,12 +50,3 @@ function printText(xv, yv,text) {
   
 }
 
-/*function printBackground(){
-
-    let backgroundImg = new Image;
-    backgroundImg.src = "./img/background.jpg"
-    backgroundImg.onload = function(){//Dibuja una imagen gradiente en el lienzo
-    ctx.drawImage(backgroundImg,0,0);//ver coordenadas x e y
-
-    }
-}*/
