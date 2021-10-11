@@ -55,20 +55,20 @@ canvas.onmousedown= function(e){
   let rect=canvas.getBoundingClientRect();
   let xClick=e.clientX - rect.left;//posición x dentro del elemento.
   let yClick=e.clientY - rect.top;//posición y dentro del elemento.
-  if((turn.xv<xClick)&&((turn.xv+turn.rowH)>xClick)&&(turn.yv<yClick)&&((turn.yv+turn.rowH)>yClick)){
-    mouse=true;
+  if((turn.xv<xClick)&&((turn.xv+turn.rowH)>xClick)&&(turn.yv<yClick)&&((turn.yv+turn.rowH)>yClick)){//valida posicion de la ficha jugador
+    mouse=true; 
   }
-
 }
 
-canvas.onmousemove= function(e){
+canvas.onmousemove = function(e){
   let rect=canvas.getBoundingClientRect();
       let x2=e.clientX - rect.left;
       let y2=e.clientY -rect.top;
       if(mouse===true){ 
-        turn.xv=x2-(turn.rowH/2);
+        turn.xv=x2-(turn.rowH/2);//agarrar la ficha desde el centro
         turn.yv=y2-(turn.rowH/2);
-        game.refresh();
+        game.refresh();//limpia el tablero y lo vuelve a dibujar
+        
       }
 };
 
@@ -77,7 +77,7 @@ canvas.onmouseup=function(e){
     if(mouse===true && xClick>game.posBoard && xClick<(wh[0]-game.posBoard)){
       for(let i=0;i<colspos.length;i++){
         if(xClick<colspos[i]){
-          
+         
           insertPiece(i,turn.player)
           break;
         }
@@ -87,8 +87,13 @@ canvas.onmouseup=function(e){
     mouse=false;
   };
 
+
+
 function insertPiece(numCol,player){
-  for(let i=0;i<game.matr[numCol].length;i++){
+
+  for(let i=0;i<game.matr[numCol].length;i++){//posicion valida dentro del tablero
+
+
   }
 
 }

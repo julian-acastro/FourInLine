@@ -47,7 +47,5 @@ function printText(xv, yv, text) {
 }
 
 function cleanCanvas() {
-  ctx.beginPath();
-  ctx.fillStyle = "#f0f0f0";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 }
