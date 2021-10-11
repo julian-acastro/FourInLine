@@ -1,20 +1,28 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+let img = new Image();
+img.src = "img/none.png";
+let img1 = new Image();
+img1.src = "img/j1.png";
+let img2 = new Image();
+img2.src = "img/j2.png";
 
-function printLine(x1, y1, x2, y2, width, color) {
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width;
-  ctx.stroke();
-}
 
-function printPieces(x1, y1,rowH,name) {
-  let backgroundImg = new Image;
-  backgroundImg.src = "img/"+ name + ".png";
-  backgroundImg.onload = function(){//Dibuja una imagen gradiente en el lienzo
-  ctx.drawImage(backgroundImg,x1,y1,rowH,rowH);//ver coordenadas x e y
-}
+function printPieces(x1, y1, rowH, name) {
+  let source;
+  switch(name){
+    case 'none':
+      source=img;
+    break;
+    case 'j1':
+      source=img1;
+    break;
+    case 'j2':
+      source=img2;
+    break;
+  }
+    //Dibuja una imagen gradiente en el lienzo
+    ctx.drawImage(source, x1, y1, rowH, rowH);
 }
 
 function setUpCanvas() {
@@ -30,21 +38,16 @@ function setUpCanvas() {
   return wh;
 }
 
-function printBoard(){
-    let backgroundImg = new Image;
-    backgroundImg.src = "img/background.jpg"
-    backgroundImg.onload = function(){//Dibuja una imagen gradiente en el lienzo
-    ctx.drawImage(backgroundImg,0,0,canvas.width,canvas.height);//ver coordenadas x e y
-
-    }
-}
-
-function printText(xv, yv,text) {
+function printText(xv, yv, text) {
   ctx.beginPath();
   ctx.fillStyle = "red"; //color de relleno
   ctx.font = "bold 60px arial"; //estilo de texto
-  ctx.textAlign="center";
+  ctx.textAlign = "center";
   ctx.fillText(text, xv, yv); //texto con método fill
-  
 }
 
+function cleanCanvas() {
+  ctx.beginPath();
+  ctx.fillStyle = "#f0f0f0";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}

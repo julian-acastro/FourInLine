@@ -22,31 +22,56 @@ class Board {
     this.colW = this.rowH+5;
     this.posBoard = (this.canvasW - (this.colW) * this.cols) / 2;//centra el tablero en el canvas
     //ancho del canvas le resto el espacio q ocupa el tablero y lo divido por dos para centrarlo.
-    this.matr = new Array();
-    this.makeTablero();
+    this.matr = new Array(this.cols);
+    this.makeBoard();
     this.makePlayerPieces();
+    this.printBoard();
     this.j1Piece;
     this.j2Piece;
   }
 
-  makeTablero() {
+  makeBoard() {
     let valX = this.posBoard;//valor de x teniendo en cuenta el radio y la posicion centrada del tablero
     let valY = 5;//valor en y 
-
     for (let i = 0; i < this.cols; i++) {
-      this.matr[i] = new Array(7);
+      this.matr[i] = new Array();
       for (let j = 0; j < this.rows; j++) {
-        let obj = new Piece(valX, valY, this.rowH, "j1");
+        let obj = new Piece(valX, valY, this.rowH, "none");
         valY += this.rowH + 3;
         this.matr[i].push(obj);
       }
       valX += this.rowH; //aumento el valor de x pra comenzar la siguiente fila
       valY =  5;//reinicio el valor de y para comenzar la siguiente iteracion
     }
-
-
   }
-
+  printBoard(){
+    for(let i =0;i<this.matr.length;i++){
+      let obj1=this.matr[i];
+      for(let j=0;j<this.rows;j++){
+        let obj2=obj1[j];
+        switch (obj2.player) {
+          case "none":
+            printPieces(obj2.xv, obj2.yv, obj2.rowH, obj2.player);//rellenar con imagenes
+            break;
+          case "j1":
+            printPieces(obj2.xv, obj2.yv, obj2.rowH, obj2.player);
+            break;
+          case "j2":
+            printPieces(obj2.xv, obj2.yv, obj2.rowH, obj2.player);
+            break;
+          case "winner":
+            printPieces(obj2.xv, obj2.yv, obj2.rowH,obj2.player);
+            break;
+        }
+      }
+    }
+    printPieces(this.j1Piece.xv, this.j1Piece.yv, this.j1Piece.rowH,this.j1Piece.player);
+    printPieces(this.j2Piece.xv, this.j2Piece.yv, this.j2Piece.rowH,this.j2Piece.player);
+  }
+  refresh(){
+    cleanCanvas();
+    this.printBoard();
+  }
   makePlayerPieces() {
     printText(this.posBoard / 2, this.rowH, "J1");
     let posj1=(this.posBoard / 2)-(this.rowH/2);

@@ -2,7 +2,7 @@ let game;//en esta variable se instancia el tablero
 let wh=[];//guardo el ancho y alto del canvas
 let colspos=[];//guardo el valor x final de cada columna
 let mouse = false;
-let turno = false;
+let turn;
 let fichaJ1;
 let fichaJ2;
 
@@ -30,6 +30,17 @@ function createGame(tipeGame) {
   game = new Board(wh[0], wh[1], tipeGame);
   fichaJ2=game.j2Piece;
   fichaJ1=game.j1Piece;
+  //
+  //
+  ///
+  ///
+  turn=fichaJ1;
+  ///
+  //
+  ///
+  //
+  //
+
   //una vez instanciado el tablero lomapeamos para detectar las columnas
   colspos[0]=game.posBoard+game.colW;
   for(let i=1;i<game.cols;i++){
@@ -40,46 +51,44 @@ function createGame(tipeGame) {
 
 
 //detectar que el click se de dentro de la ficha del jugador 
-canvas.addEventListener('mousedown', function(evento){
-  let rect=canvas.getBoundingClientRect();//devuelve el tamaño del canvas y su posición relativa respecto a la ventana de visualización
-  let x=evento.clientX - rect.left;//posición x dentro del elemento.
-  let y=evento.clientY - rect.top;//posición y dentro del elemento.
- let ficha=fichaJ2;
-  let distance= Math.sqrt(((x-ficha.xv)*(x-ficha.xv)) + ((y-ficha.yv)*(y-ficha.yv)));
-  if(distance<=game.radius){ //aca van las coordenadas de las fichas de j1 y j2
-        mouse = true;
-        console.log("piece of j1");
-     
-    }
-  
-})
-
-canvas.addEventListener('mousemove', function(evento){
+canvas.onmousedown= function(e){
   let rect=canvas.getBoundingClientRect();
-      let x2=evento.clientX - rect.left;
-      let y2=evento.clientY -rect.top;
+  let xClick=e.clientX - rect.left;//posición x dentro del elemento.
+  let yClick=e.clientY - rect.top;//posición y dentro del elemento.
+  if((turn.xv<xClick)&&((turn.xv+turn.rowH)>xClick)&&(turn.yv<yClick)&&((turn.yv+turn.rowH)>yClick)){
+    mouse=true;
+  }
+
+}
+
+canvas.onmousemove= function(e){
+  let rect=canvas.getBoundingClientRect();
+      let x2=e.clientX - rect.left;
+      let y2=e.clientY -rect.top;
       if(mouse===true){ 
-
-      x=x2;
-      y=y2;     
-      //console.log(x);
-      //console.log(y);  
+        turn.xv=x2-(turn.rowH/2);
+        turn.yv=y2-(turn.rowH/2);
+        game.refresh();
       }
-});
+};
 
-canvas.addEventListener('mouseup', function(evento){
-
-  let xClick=evento.offsetX;
+canvas.onmouseup=function(e){
+  let xClick=e.offsetX;
     if(mouse===true && xClick>game.posBoard && xClick<(wh[0]-game.posBoard)){
       for(let i=0;i<colspos.length;i++){
         if(xClick<colspos[i]){
-          console.log("columna: " + (i+1));
+          
+          insertPiece(i,turn.player)
           break;
         }
       }
-        mouse=false;
+      mouse=false;
     }
     mouse=false;
-  }
-);
+  };
 
+function insertPiece(numCol,player){
+  for(let i=0;i<game.matr[numCol].length;i++){
+  }
+
+}
