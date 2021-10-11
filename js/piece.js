@@ -3,7 +3,7 @@ class Piece {
     this.xv = xv;
     this.yv = yv;
     this.rowH = rowH;
-    this.player = player;
+    this.player = player; 
   }
 
 }
