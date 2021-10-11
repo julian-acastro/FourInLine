@@ -47,5 +47,6 @@ function printText(xv, yv, text) {
 }
 
 function cleanCanvas() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0,0,canvas.width,canvas.height);//revisar, solo tiene que borrar el camino de fichas no todo
+
 }

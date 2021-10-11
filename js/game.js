@@ -67,19 +67,22 @@ canvas.onmousemove = function(e){
       if(mouse===true){ 
         turn.xv=x2-(turn.rowH/2);//agarrar la ficha desde el centro
         turn.yv=y2-(turn.rowH/2);
-        game.refresh();//limpia el tablero y lo vuelve a dibujar
-        
+        game.refresh();//limpia el tablero y lo vuelve a dibujar para no dibujar un "camino" fichas 
       }
 };
 
 canvas.onmouseup=function(e){
+  
   let xClick=e.offsetX;
-    if(mouse===true && xClick>game.posBoard && xClick<(wh[0]-game.posBoard)){
-      for(let i=0;i<colspos.length;i++){
+  
+    if(mouse===true && xClick>game.posBoard && xClick<(wh[0]-game.posBoard)){//valido posicion dentro del tablero
+      for(let i=0;i<colspos.length;i++){//valido columnas
         if(xClick<colspos[i]){
          
-          insertPiece(i,turn.player)
+          console.log("columna: " + (i+1));
+          insertPiece(i,turn.player);
           break;
+          
         }
       }
       mouse=false;
@@ -90,10 +93,14 @@ canvas.onmouseup=function(e){
 
 
 function insertPiece(numCol,player){
+  let cantRows=game.matr[numCol].length;
+  let turn = player;
+  for(let i=0;i<cantRows;i++){//recorre la cantidad de filas
 
-  for(let i=0;i<game.matr[numCol].length;i++){//posicion valida dentro del tablero
-
-
+    if (game.matr[numCol][i].player == 'none') {//si esta vacio
+        (game.matr[numCol][i]) = game.j1Piece;//fichaJ1.printPieces();//no se que parametros
+    }
   }
+  
 
 }
