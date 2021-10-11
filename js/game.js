@@ -76,9 +76,8 @@ canvas.onmouseup=function(e){
   let xClick=e.offsetX;
   
     if(mouse===true && xClick>game.posBoard && xClick<(wh[0]-game.posBoard)){//valido posicion dentro del tablero
-      for(let i=0;i<colspos.length;i++){//valido columnas
-        if(xClick<colspos[i]){
-         
+      for(let i=0;i<colspos.length;i++){//recorre por columnas
+        if(xClick<colspos[i]){        
           console.log("columna: " + (i+1));
           insertPiece(i,turn.player);
           break;
@@ -93,17 +92,19 @@ canvas.onmouseup=function(e){
 
 
 function insertPiece(numCol,player){
-  let cantRows=game.matr[numCol].length;
-  
-  for(let i=0;i<cantRows;i++){//recorre la cantidad de filas
 
-    if (game.matr[numCol][i].player == 'none') {//si esta vacio
-        (game.matr[numCol][i]).player = fichaJ1.player;//fichaJ1.printPieces();//no se que parametros
-        console.log('none');
-        mouse=true;
-      }
-    
-  }
   
+  let cantRows=game.matr[numCol].length;//cantidad de filas
+
+  for(let i=0;i<cantRows;i++){//recorre por filas
+    
+    if (game.matr[numCol][i].player == 'none') {//si esta vacio
+      i++; 
+      
+    }
+   else{
+    (game.matr[numCol][i-1]).player = fichaJ1.player;//fichaJ1.printPieces();//no se que parametros
+   }
+  }
 
 }
