@@ -94,12 +94,15 @@ canvas.onmouseup=function(e){
 
 function insertPiece(numCol,player){
   let cantRows=game.matr[numCol].length;
-  let turn = player;
+  
   for(let i=0;i<cantRows;i++){//recorre la cantidad de filas
 
     if (game.matr[numCol][i].player == 'none') {//si esta vacio
-        (game.matr[numCol][i]) = game.j1Piece;//fichaJ1.printPieces();//no se que parametros
-    }
+        (game.matr[numCol][i]).player = fichaJ1.player;//fichaJ1.printPieces();//no se que parametros
+        console.log('none');
+        mouse=true;
+      }
+    
   }
   
 
