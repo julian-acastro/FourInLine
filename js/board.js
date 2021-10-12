@@ -35,7 +35,12 @@ class Board {
     for (let i = 0; i < this.cols; i++) {
       this.matr[i] = new Array();
       for (let j = 0; j < this.rows; j++) {
-        let obj = new Piece(valX, valY, this.rowH, "none");
+        let obj = {
+          xv : valX,
+          yv : valY,
+          rowH : this.rowH,
+          player : "none" 
+        };
         valY += this.rowH + 3;
         this.matr[i].push(obj);
       }
@@ -84,10 +89,20 @@ class Board {
   makePlayerPieces() {
     printText(this.posBoard / 2, this.rowH, "J1");
     let posj1 = this.posBoard / 2 - this.rowH / 2;
-    this.j1Piece = new Piece(posj1, this.rowH * 2, this.rowH, "j1");
+    this.j1Piece ={
+        xv : posj1,
+        yv : this.rowH* 2,
+        rowH : this.rowH,
+        player :  "j1"
+    }
     printText(this.canvasW - this.posBoard / 2, this.rowH, "J2");
     let posj2 = this.canvasW - this.posBoard / 2 - this.rowH / 2;
-    this.j2Piece = new Piece(posj2, this.rowH * 2, this.rowH, "j2");
+    this.j2Piece ={
+      xv : posj2,
+      yv : this.rowH* 2,
+      rowH : this.rowH,
+      player :  "j2"
+    }
   }
   insertPiece(numCol, player) {
     let i = 0; //creo iterador
