@@ -4,9 +4,9 @@ class Board {
     this.canvasH = canvasH;
     this.tipeGame = tipeGame;
     switch (tipeGame) {
-      case 3:
-        this.rows = 3;
-        this.cols = 3;
+      case 6:
+        this.rows = 8;
+        this.cols = 9;
         break;
       case 4:
         this.rows = 6;
@@ -17,7 +17,9 @@ class Board {
         this.cols = 8;
         break;
     }
-    this.rowH = (this.canvasH - 30) / this.rows; //calculo el diametro de las fichas
+
+    this.cantPieces = this.rows * this.cols;
+    this.rowH = ((this.canvasH - 200) / this.rows); //calculo el diametro de las fichas
     this.colW = this.rowH + 5;
     this.posBoard = (this.canvasW - this.colW * this.cols) / 2; //centra el tablero en el canvas
     //ancho del canvas le resto el espacio q ocupa el tablero y lo divido por dos para centrarlo.
@@ -29,9 +31,10 @@ class Board {
     this.j2Piece;
   }
 
+
   makeBoard() {
     let valX = this.posBoard; //valor de x teniendo en cuenta el radio y la posicion centrada del tablero
-    let valY = 5; //valor en y
+    let valY = 100; //valor en y
     for (let i = 0; i < this.cols; i++) {
       this.matr[i] = new Array();
       for (let j = 0; j < this.rows; j++) {
@@ -45,7 +48,7 @@ class Board {
         this.matr[i].push(obj);
       }
       valX += this.rowH; //aumento el valor de x pra comenzar la siguiente fila
-      valY = 5; //reinicio el valor de y para comenzar la siguiente iteracion
+      valY = 100; //reinicio el valor de y para comenzar la siguiente iteracion
     }
   }
   printBoard() {
@@ -81,21 +84,30 @@ class Board {
       this.j2Piece.rowH,
       this.j2Piece.player
     );
+    //hacer funcion que imprima el resto del canvas 
   }
   refresh() {
     cleanCanvas();
+    printTurn();
     this.printBoard();
   }
+  
   makePlayerPieces() {
-    printText(this.posBoard / 2, this.rowH, "J1");
+   //donde va esto?
+    printCantPieces(this.posBoard / 2, this.rowH/2, "Fichas", 0);//ver las posiciones
+    
+    
     let posj1 = this.posBoard / 2 - this.rowH / 2;
     this.j1Piece = {
       xv: posj1,
       yv: this.rowH * 2,
       rowH: this.rowH,
       player: "j1",
-    };
-    printText(this.canvasW - this.posBoard / 2, this.rowH, "J2");
+    }; 
+   
+    printCantPieces(this.canvasW - this.posBoard / 2, this.rowH/2, "Fichas", 0);
+    
+
     let posj2 = this.canvasW - this.posBoard / 2 - this.rowH / 2;
     this.j2Piece = {
       xv: posj2,
@@ -103,10 +115,12 @@ class Board {
       rowH: this.rowH,
       player: "j2",
     };
+    
   }
+
   insertPiece(numCol, player) {
     let i = 0; //creo iterador
-
+    
     let col = this.matr[numCol]; //guardo la columna donde inserto
     if (col[0].player === "none") {
       while (i < col.length && col[i].player === "none") {
@@ -115,10 +129,13 @@ class Board {
       }
       //inserto nuevo valor a la pieza
       col[i - 1].player = player;
+
       //refresco nuevamente el tablero para mostrar los cambios
       this.refresh();
       return i - 1;
-    } else {
+
+    } 
+    else {
       return -1;
     }
   }
@@ -160,23 +177,24 @@ class Board {
       }
       console.log("diagonal ascendente= " + count);
     }
-    //
+   
   }
   check(col, row, comportamientoCol, comportamientoRow, player) {
     let count = 0;
     let i = col + comportamientoCol;
     let j = row + comportamientoRow;
-    
-      while (
-        j < this.rows && j>= 0
-        && i < this.cols && i >= 0 &&
-        this.matr[i][j].player == player
-      ) {
-        count++;
-        i += comportamientoCol;
-        j += comportamientoRow;
-      }
+
+    while (
+      j < this.rows && j >= 0
+      && i < this.cols && i >= 0 &&
+      this.matr[i][j].player == player
+    ) {
+      count++;
+      i += comportamientoCol;
+      j += comportamientoRow;
+    }
     
     return count;
+    
   }
 }

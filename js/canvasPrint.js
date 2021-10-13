@@ -13,12 +13,16 @@ function setImgs(opc) {
       img2=new Image();
       img2.src = "img/j2.png";
       break;
-    case 1:
+    case 2:
+      img1 = new Image();
       img1.src = "img/j1opc2.png";
+      img2=new Image();
       img2.src = "img/j2opc2.png";
       break;
-    case 1:
+    case 3:
+      img1 = new Image();
       img1.src = "img/j1opc3.png";
+      img2=new Image();
       img2.src = "img/j2opc3.png";
       break;
   }
@@ -36,7 +40,7 @@ function printPieces(x1, y1, rowH, name) {
       source = img2;
       break;
   }
-  //Dibuja una imagen gradiente en el lienzo
+  
   ctx.drawImage(source, x1, y1, rowH, rowH);
 }
 
@@ -53,14 +57,32 @@ function setUpCanvas() {
   return wh;
 }
 
-function printText(xv, yv, text) {
+function printText(xv, yv, text,colorFill, colorStroke) {
   ctx.beginPath();
-  ctx.fillStyle = "red"; //color de relleno
-  ctx.font = "bold 60px arial"; //estilo de texto
+  ctx.fillStyle = colorFill; //color de relleno
+  ctx.font = "bold 40px arial"; //estilo de texto
   ctx.textAlign = "center";
   ctx.fillText(text, xv, yv); //texto con método fill
+  ctx.strokeStyle = colorStroke;
+  ctx.strokeText(text, xv, yv);
+  ctx.stroke();
+
+}
+
+function printCantPieces(xv, yv, text, i){
+  ctx.beginPath();
+  ctx.fillStyle = "black"; //color de relleno
+  ctx.font = "bold 40px arial"; //estilo de texto
+  ctx.textAlign = "center";
+  ctx.fillText(text, xv, yv,i); //texto con método fill
+  ctx.strokeStyle = 'white';
+  ctx.strokeText(text, xv, yv, i);
+  ctx.stroke();
+  
 }
 
 function cleanCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); //revisar, solo tiene que borrar el camino de fichas no todo
 }
+
+
