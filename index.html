@@ -10,13 +10,19 @@
 </head>
 <body>
     <div class="modal" id="modal">
-        <a class="btn blue" id="3InLine">Tres en linea</a>
-        <a class="btn green" id="4InLine">Cuatro en linea</a>
-        <a class="btn red" id="5InLine">Cinco en linea</a>
+        <div class="" id="btnGameContainer">
+            <a class="btn blue" id="3InLine">Tres en linea</a>
+            <a class="btn green" id="4InLine">Cuatro en linea</a>
+            <a class="btn red" id="5InLine">Cinco en linea</a>
+        </div>
+        <div class="hidden" id="btnPiecesContainer">
+            <a class="btn blue" id="PieceOpc1">Opcion 1</a>
+            <a class="btn green" id="PieceOpc2">Opcion 2</a>
+            <a class="btn red" id="PieceOpc3">Opcion 3</a>
+        </div>
     </div>
     <canvas class="hidden" id="canvas"></canvas>
     <script src="js/canvasPrint.js"></script>
-    <script src="js/piece.js"></script>
     <script src="js/board.js"></script>
     <script src="js/game.js"></script>
 </body>

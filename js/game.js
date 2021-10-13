@@ -2,6 +2,7 @@ let game; //en esta variable se instancia el tablero
 let wh = []; //guardo el ancho y alto del canvas
 let colspos = []; //guardo el valor x final de cada columna
 let mouse = false;
+let tipeGameSelected=0;
 let turn;
 let playerJ1= {
   piece: null,
@@ -16,22 +17,51 @@ let playerJ2= {
   turns: 0
 };
 
+let btnGameContainer=document.getElementById("btnGameContainer");
+let btnPiecesContainer=document.getElementById("btnPiecesContainer");
 let btn4InLine = document.getElementById("4InLine");
 btn4InLine.addEventListener("click", function (e) {
-  createGame(4);
+  btnGameContainer.className += " hidden";
+  btnPiecesContainer.classList.remove("hidden");
+  tipeGameSelected=4;
 });
 let btn3InLine = document.getElementById("3InLine");
 btn3InLine.addEventListener("click", function (e) {
-  createGame(3);
+  btnGameContainer.className += " hidden";
+  btnPiecesContainer.classList.remove("hidden");
+  tipeGameSelected=3;
 });
 
 let btn5InLine = document.getElementById("5InLine");
 btn5InLine.addEventListener("click", function (e) {
-  createGame(5);
+  btnGameContainer.className += " hidden";
+  btnPiecesContainer.classList.remove("hidden");
+  tipeGameSelected=5;
+});
+
+let btnPiece1=document.getElementById("PieceOpc1");
+btnPiece1.addEventListener("click",function (e) {
+  modal.className+=" hidden";
+  setImgs(1);
+  createGame(tipeGameSelected);
+  game.refresh();
+});
+let btnPiece2=document.getElementById("PieceOpc2");
+btnPiece1.addEventListener("click",function (e) {
+  modal.className+=" hidden";
+  setImgs(2);
+  createGame(tipeGameSelected);
+  game.refresh();
+});
+let btnPiece3=document.getElementById("PieceOpc3");
+btnPiece1.addEventListener("click",function (e) {
+  modal.className+=" hidden";
+  setImgs(3);
+  createGame(tipeGameSelected);
+  game.refresh();
 });
 
 function createGame(tipeGame) {
-  modal.className += " hidden";
   wh = setUpCanvas();
   game = new Board(wh[0], wh[1], tipeGame);
   playerJ2.piece = game.j2Piece;
@@ -77,7 +107,7 @@ canvas.onmousemove = function (e) {
 
 canvas.onmouseup = function (e) {
   let xClick = e.offsetX;
-  let resultInsert;
+  let resultInsert, colInsert;
   if (
     mouse === true &&
     xClick > game.posBoard &&
@@ -87,7 +117,8 @@ canvas.onmouseup = function (e) {
     for (let i = 0; i < colspos.length; i++) {
       //recorre por columnas
       if (xClick < colspos[i]) {
-        resultInsert = game.insertPiece(i, turn.player);
+        colInsert=i;
+        resultInsert = game.insertPiece(colInsert, turn.player);
         break;
       }
     }
@@ -95,7 +126,12 @@ canvas.onmouseup = function (e) {
       case -1:
         alert("ahi no salamin")
         break;
+      case 0:
+        game.detectWinner(colInsert,resultInsert);
+        changeTurn();
+        break;
       default:
+        game.detectWinner(colInsert,resultInsert);
         changeTurn();
         break;
     }
@@ -109,7 +145,7 @@ canvas.onmouseup = function (e) {
 function changeTurn(){
   if(turn.player=="j1"){
     turn=playerJ2.piece;
-  }else
+  }else if(turn.player=="j2")
     turn=playerJ1.piece;
 }
 function restorePieces(){

@@ -36,10 +36,10 @@ class Board {
       this.matr[i] = new Array();
       for (let j = 0; j < this.rows; j++) {
         let obj = {
-          xv : valX,
-          yv : valY,
-          rowH : this.rowH,
-          player : "none" 
+          xv: valX,
+          yv: valY,
+          rowH: this.rowH,
+          player: "none",
         };
         valY += this.rowH + 3;
         this.matr[i].push(obj);
@@ -89,20 +89,20 @@ class Board {
   makePlayerPieces() {
     printText(this.posBoard / 2, this.rowH, "J1");
     let posj1 = this.posBoard / 2 - this.rowH / 2;
-    this.j1Piece ={
-        xv : posj1,
-        yv : this.rowH* 2,
-        rowH : this.rowH,
-        player :  "j1"
-    }
+    this.j1Piece = {
+      xv: posj1,
+      yv: this.rowH * 2,
+      rowH: this.rowH,
+      player: "j1",
+    };
     printText(this.canvasW - this.posBoard / 2, this.rowH, "J2");
     let posj2 = this.canvasW - this.posBoard / 2 - this.rowH / 2;
-    this.j2Piece ={
-      xv : posj2,
-      yv : this.rowH* 2,
-      rowH : this.rowH,
-      player :  "j2"
-    }
+    this.j2Piece = {
+      xv: posj2,
+      yv: this.rowH * 2,
+      rowH: this.rowH,
+      player: "j2",
+    };
   }
   insertPiece(numCol, player) {
     let i = 0; //creo iterador
@@ -121,5 +121,62 @@ class Board {
     } else {
       return -1;
     }
+  }
+  detectWinner(col, row) {
+    let player = this.matr[col][row].player,
+      iterator = col;
+    let count = 1;
+    //verifico mi derecha
+    count += this.check(col, row, 1, 0, player);
+    //si no llego a TIPOGAME verifico mi izq
+    if (count < this.tipeGame) {
+      count += this.check(col, row, -1, 0, player);
+    }
+    console.log("horizontal= " + count);
+    //si no llego tipogame verifico verticalmente
+    if (count < this.tipeGame) {
+      count = 1;
+      count += this.check(col, row, 0, 1, player);
+      if (count < this.tipeGame) {
+        count += this.check(col, row, 0, -1, player);
+      }
+      console.log("vertical= " + count);
+    }
+    //si no llego tipogame verifico diagonal decendente
+    if (count < this.tipeGame) {
+      count = 1;
+      count += this.check(col, row, -1, -1, player);
+      if (count < this.tipeGame) {
+        count += this.check(col, row, 1, 1, player);
+      }
+      console.log("diagonal decendente= " + count);
+    }
+    //si no llego tipogame verifico diagonal ascendente
+    if (count < this.tipeGame) {
+      count = 1;
+      count += this.check(col, row, -1, 1, player);
+      if (count < this.tipeGame) {
+        count += this.check(col, row, 1, -1, player);
+      }
+      console.log("diagonal ascendente= " + count);
+    }
+    //
+  }
+  check(col, row, comportamientoCol, comportamientoRow, player) {
+    let count = 0;
+    let i = col + comportamientoCol;
+    let j = row + comportamientoRow;
+    
+      while (
+        j < this.rows && j>= 0
+        && i < this.cols && i >= 0 &&
+        this.matr[i][j].player == player
+      ) {
+        count++;
+        i += comportamientoCol;
+        j += comportamientoRow;
+      }
+    
+    return count;
   }
 }
