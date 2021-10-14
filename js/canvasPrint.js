@@ -1,6 +1,6 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-let timer = document.getElementById("timerContainer");
+let visor = document.getElementById("timerContainer");
 let img = new Image();
 img.src = "img/none.png";
 let img1;
@@ -47,7 +47,7 @@ function printPieces(x1, y1, rowH, name) {
 
 function setUpCanvas() {
   canvas.classList.remove("hidden");
-  timer.classList.remove("hidden");
+  visor.classList.remove("hidden");
   ctx.translate(0.5, 0.5);
   // Set display size (vw/vh).
   var sizeWidth = (100 * window.innerWidth) / 100,

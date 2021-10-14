@@ -12,6 +12,7 @@ body {
 }
 #timerContainer{
 
+  
   border: 2px solid black;
   text-align: center;
   color: black;
@@ -22,6 +23,7 @@ body {
   border-bottom-left-radius: 5px;
 }
 #countdown{
+  margin: 20px;
   font-size: 60px;
 }
 .modal {

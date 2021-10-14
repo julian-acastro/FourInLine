@@ -22,12 +22,13 @@ let playerJ2 = {
 };
 
 
-function endTime(){
+function endTime(xv,xy){
+
   document.getElementById('countdown').innerHTML = time;
 
   if(time == 0){
     alert("Se acabo el tiempo");
-   
+    
   }
   else{
     time = time - 1;
@@ -98,7 +99,7 @@ function createGame(tipeGame) {
   cantPieces=game.cols*game.rows;
   playerJ1.turns=cantPieces/2;
   playerJ2.turns=cantPieces/2;
-  endTime();
+  
   
   //una vez instanciado el tablero lo mapeamos para detectar las columnas
   colspos[0] = game.posBoard + game.colW;
