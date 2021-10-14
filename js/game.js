@@ -5,7 +5,7 @@ let mouse = false;
 let tipeGameSelected = 0;
 let turn;
 let cantPieces;
-let time = 600;
+let time;
 
 
 let playerJ1 = {
@@ -27,7 +27,7 @@ function endTime(){
   document.getElementById('countdown').innerHTML = time;
 
   if(time == 0){
-    alert("Se acabo el tiempo");
+    endGame();
     
   }
   else{
@@ -38,6 +38,7 @@ function endTime(){
 
 let btnGameContainer = document.getElementById("btnGameContainer");
 let btnPiecesContainer = document.getElementById("btnPiecesContainer");
+let endGameContainer = document.getElementById("endGameContainer");
 
 
 let btn4InLine = document.getElementById("4InLine");
@@ -84,6 +85,8 @@ btnPiece3.addEventListener("click", function (e) {
 
 let btnRestart=document.getElementById("restart");
 btnRestart.addEventListener("click",function(e){restartGame()});
+let btnRestart2=document.getElementById("restart2");
+btnRestart2.addEventListener("click",function(e){restartGame()});
 
 
 function createGame(tipeGame) {
@@ -108,6 +111,7 @@ function createGame(tipeGame) {
   for (let i = 1; i < game.cols; i++) {
     colspos[i] = colspos[i - 1] + game.colW;
   }
+  time=300;
   endTime();
 }
 
@@ -247,13 +251,25 @@ function winner(){
   }
 }
 
+function endGame(){
+  canvas.className += " hidden";
+  btnPiecesContainer.className += " hidden";
+  modal.classList.remove("hidden");
+  let endGameContainer=document.getElementById("endGameContainer");
+  endGameContainer.classList.remove("hidden");
+
+  document.getElementById('endGameText').innerHTML = "se ha acabado el tiempo o te has quedado sin fichas";
+}
+
 function restartGame(){
   canvas.className += " hidden";
   btnPiecesContainer.className += " hidden";
   if(modal.classList.contains("hidden")){
     modal.classList.remove("hidden");
   }
-
+  if(!endGameContainer.classList.contains("hidden")){
+    endGameContainer.className += " hidden";
+  }
   let winnerContainer=document.getElementById("winnerContainer");
   winnerContainer.className += " hidden";
   btnGameContainer.classList.remove("hidden");
