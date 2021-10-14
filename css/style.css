@@ -10,6 +10,20 @@ body {
   align-items: center;
   background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
 }
+#timerContainer{
+
+  border: 2px solid black;
+  text-align: center;
+  color: black;
+  background-color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#countdown{
+  font-size: 60px;
+}
 .modal {
   display: flex;
   height: fit-content;
@@ -62,6 +76,19 @@ body {
 p {
   font-size: 10vh;
   text-align: center;
-  color: #55acee;
+  color:#c0392b;
+  border-style: white;
   padding-top: 20px;
+  color: #fff;
+
+	text-shadow:
+		0 0 5px rgba(165, 94, 234,1.0),
+		0 0 10px rgba(165, 94, 234,1.0),
+		0 0 20px rgba(165, 94, 234,1.0),
+		0 0 40px rgba(190, 46, 221,1.0),
+		0 0 80px rgba(190, 46, 221,1.0),
+		0 0 90px rgba(190, 46, 221,1.0),
+		0 0 100px rgba(190, 46, 221,1.0),
+		0 0 140px rgba(190, 46, 221,1.0),
+		0 0 180px rgba(190, 46, 221,1.0);
 }

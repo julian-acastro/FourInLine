@@ -5,6 +5,8 @@ let mouse = false;
 let tipeGameSelected = 0;
 let turn;
 let cantPieces;
+let time = 60;
+
 
 let playerJ1 = {
   piece: null,
@@ -20,9 +22,22 @@ let playerJ2 = {
 };
 
 
+function endTime(){
+  document.getElementById('countdown').innerHTML = time;
+
+  if(time == 0){
+    alert("Se acabo el tiempo");
+   
+  }
+  else{
+    time = time - 1;
+    setTimeout(endTime, 1E3);
+  }
+}
 
 let btnGameContainer = document.getElementById("btnGameContainer");
 let btnPiecesContainer = document.getElementById("btnPiecesContainer");
+
 
 let btn4InLine = document.getElementById("4InLine");
 btn4InLine.addEventListener("click", function (e) {
@@ -83,6 +98,7 @@ function createGame(tipeGame) {
   cantPieces=game.cols*game.rows;
   playerJ1.turns=cantPieces/2;
   playerJ2.turns=cantPieces/2;
+  endTime();
   
   //una vez instanciado el tablero lo mapeamos para detectar las columnas
   colspos[0] = game.posBoard + game.colW;
@@ -198,8 +214,7 @@ function printTurn() {
   printText(playerJ2.xv,playerJ2.yv+200,"Fichas: ","black", "white");
   printText((playerJ1.xv+100),(playerJ1.yv+200),piecesJ1,"red", "red");
   printText((playerJ2.xv+100),(playerJ2.yv+200),piecesJ2,"red", "red");
-  
-  
+ 
 }
 
 function restorePieces() {
@@ -209,12 +224,24 @@ function restorePieces() {
   playerJ2.piece.yv = playerJ2.yv;
 }
 
+
+
+
 function winner(){
   canvas.className += " hidden";
   btnPiecesContainer.className += " hidden";
   modal.classList.remove("hidden");
   let winnerContainer=document.getElementById("winnerContainer");
   winnerContainer.classList.remove("hidden");
+  
+
+  if(turn.player == "j1"){
+    document.getElementById('winnerText').innerHTML = "Ganador J1";
+
+  }
+  else{
+    document.getElementById('winnerText').innerHTML = "Ganador J2";
+  }
 }
 
 function restartGame(){
@@ -223,7 +250,10 @@ function restartGame(){
   if(modal.classList.contains("hidden")){
     modal.classList.remove("hidden");
   }
+
   let winnerContainer=document.getElementById("winnerContainer");
   winnerContainer.className += " hidden";
   btnGameContainer.classList.remove("hidden");
+ 
+
 }
