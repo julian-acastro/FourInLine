@@ -60,6 +60,7 @@ body {
   background-color: #e74c3c;
 }
 p {
+  font-size: 10vh;
   text-align: center;
   color: #55acee;
   padding-top: 20px;

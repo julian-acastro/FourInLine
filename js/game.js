@@ -66,23 +66,25 @@ btnPiece3.addEventListener("click", function (e) {
   game.refresh();
 });
 
+let btnRestart=document.getElementById("restart");
+btnRestart.addEventListener("click",function(e){restartGame()});
 function createGame(tipeGame) {
-  
   wh = setUpCanvas();
   game = new Board(wh[0], wh[1], tipeGame);
+  //seteo en j1 y j2 su pieza Y guardo el valor donde setea la pieza para crear fururas pieza
   playerJ2.piece = game.j2Piece;
   playerJ2.xv = game.j2Piece.xv;
   playerJ2.yv = game.j2Piece.yv;
   playerJ1.piece = game.j1Piece;
   playerJ1.xv = game.j1Piece.xv;
   playerJ1.yv = game.j1Piece.yv;
-  turn = playerJ1.piece;
+  turn = playerJ1.piece;// seteo a j1 por defecto en el turno para q el inicie el juego
   printTurn();
   cantPieces=game.cols*game.rows;
   playerJ1.turns=cantPieces/2;
   playerJ2.turns=cantPieces/2;
   
-  //una vez instanciado el tablero lomapeamos para detectar las columnas
+  //una vez instanciado el tablero lo mapeamos para detectar las columnas
   colspos[0] = game.posBoard + game.colW;
   for (let i = 1; i < game.cols; i++) {
     colspos[i] = colspos[i - 1] + game.colW;
@@ -139,13 +141,12 @@ canvas.onmouseup = function (e) {
       case -1:
         alert("No hay lugar en esa columna, elija otra")
         break;
-      case 0:
-        game.detectWinner(colInsert, resultInsert);
-        changeTurn();
-        break;
       default:
-        game.detectWinner(colInsert, resultInsert);
-        changeTurn();
+        if(game.detectWinner(colInsert, resultInsert)){
+          winner();
+        }else{
+          changeTurn();
+        }
         break;
     }
     mouse = false;
@@ -206,4 +207,23 @@ function restorePieces() {
   playerJ1.piece.yv = playerJ1.yv;
   playerJ2.piece.xv = playerJ2.xv;
   playerJ2.piece.yv = playerJ2.yv;
+}
+
+function winner(){
+  canvas.className += " hidden";
+  btnPiecesContainer.className += " hidden";
+  modal.classList.remove("hidden");
+  let winnerContainer=document.getElementById("winnerContainer");
+  winnerContainer.classList.remove("hidden");
+}
+
+function restartGame(){
+  canvas.className += " hidden";
+  btnPiecesContainer.className += " hidden";
+  if(modal.classList.contains("hidden")){
+    modal.classList.remove("hidden");
+  }
+  let winnerContainer=document.getElementById("winnerContainer");
+  winnerContainer.className += " hidden";
+  btnGameContainer.classList.remove("hidden");
 }

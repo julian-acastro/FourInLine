@@ -175,7 +175,10 @@ class Board {
       }
       console.log("diagonal ascendente= " + count);
     }
-   
+    if(count>=this.tipeGame){
+      return true;
+    }else
+      return false
   }
   check(col, row, comportamientoCol, comportamientoRow, player) {
     let count = 0;
