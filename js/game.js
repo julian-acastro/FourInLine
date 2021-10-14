@@ -4,6 +4,7 @@ let colspos = []; //guardo el valor x final de cada columna
 let mouse = false;
 let tipeGameSelected = 0;
 let turn;
+let cantPieces;
 
 let playerJ1 = {
   piece: null,
@@ -22,17 +23,18 @@ let playerJ2 = {
 
 let btnGameContainer = document.getElementById("btnGameContainer");
 let btnPiecesContainer = document.getElementById("btnPiecesContainer");
+
 let btn4InLine = document.getElementById("4InLine");
 btn4InLine.addEventListener("click", function (e) {
   btnGameContainer.className += " hidden";
   btnPiecesContainer.classList.remove("hidden");
   tipeGameSelected = 4;
 });
-let btn3InLine = document.getElementById("3InLine");
-btn3InLine.addEventListener("click", function (e) {
+let btn6InLine = document.getElementById("6InLine");
+btn6InLine.addEventListener("click", function (e) {
   btnGameContainer.className += " hidden";
   btnPiecesContainer.classList.remove("hidden");
-  tipeGameSelected = 3;
+  tipeGameSelected = 6;
 });
 
 let btn5InLine = document.getElementById("5InLine");
@@ -76,10 +78,10 @@ function createGame(tipeGame) {
   playerJ1.yv = game.j1Piece.yv;
   turn = playerJ1.piece;
   printTurn();
-  playerJ1.turns=(game.cols*game.rows)/2;
-  playerJ2.turns=game.cols*game.rows/2;
+  cantPieces=game.cols*game.rows;
+  playerJ1.turns=cantPieces/2;
+  playerJ2.turns=cantPieces/2;
   
-
   //una vez instanciado el tablero lomapeamos para detectar las columnas
   colspos[0] = game.posBoard + game.colW;
   for (let i = 1; i < game.cols; i++) {
@@ -153,34 +155,50 @@ canvas.onmouseup = function (e) {
   game.refresh();
 };
 
+
 function changeTurn() {
+  
   if (turn.player == "j1") {
     turn = playerJ2.piece;
-
+    playerJ1.turns--;
     
   }
   else if (turn.player == "j2") {
     turn = playerJ1.piece;
-   
+    playerJ2.turns--;
+    
   }
-
+  
 }
 
 function printTurn() {
   let xv;
   let yv;
+  let piecesJ1;
+  let piecesJ2;
 
   if(turn.player==="j1"){
     xv=playerJ1.xv;
     yv=playerJ1.yv / 3;
+    piecesJ1=playerJ1.turns;
+    piecesJ2=playerJ2.turns;
   }
   else{
     xv=playerJ2.xv;
     yv=playerJ2.yv / 3;
+    piecesJ2=playerJ2.turns;
+    piecesJ1=playerJ1.turns;
   }
-  printText(playerJ1.xv, (playerJ1.yv -10), "J1","green", "white");
-  printText(playerJ2.xv, (playerJ1.yv -10), "J2","green", "white" );
+
+  printText(playerJ1.xv, (playerJ1.yv -10), "J1","white", "black");
+  printText(playerJ2.xv, (playerJ1.yv -10), "J2","white", "black" );
   printText(xv,yv,"Turno","green", "white");
+  printText(playerJ1.xv,playerJ1.yv+200,"Fichas: ","black", "white");
+  printText(playerJ2.xv,playerJ2.yv+200,"Fichas: ","black", "white");
+  printText((playerJ1.xv+100),(playerJ1.yv+200),piecesJ1,"red", "red");
+  printText((playerJ2.xv+100),(playerJ2.yv+200),piecesJ2,"red", "red");
+  
+  
 }
 
 function restorePieces() {

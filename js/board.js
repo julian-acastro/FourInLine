@@ -90,11 +90,11 @@ class Board {
     cleanCanvas();
     printTurn();
     this.printBoard();
+    
   }
   
   makePlayerPieces() {
-   //donde va esto?
-    printCantPieces(this.posBoard / 2, this.rowH/2, "Fichas", 0);//ver las posiciones
+   
     
     
     let posj1 = this.posBoard / 2 - this.rowH / 2;
@@ -104,8 +104,6 @@ class Board {
       rowH: this.rowH,
       player: "j1",
     }; 
-   
-    printCantPieces(this.canvasW - this.posBoard / 2, this.rowH/2, "Fichas", 0);
     
 
     let posj2 = this.canvasW - this.posBoard / 2 - this.rowH / 2;

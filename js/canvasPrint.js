@@ -66,19 +66,6 @@ function printText(xv, yv, text,colorFill, colorStroke) {
   ctx.strokeStyle = colorStroke;
   ctx.strokeText(text, xv, yv);
   ctx.stroke();
-
-}
-
-function printCantPieces(xv, yv, text, i){
-  ctx.beginPath();
-  ctx.fillStyle = "black"; //color de relleno
-  ctx.font = "bold 40px arial"; //estilo de texto
-  ctx.textAlign = "center";
-  ctx.fillText(text, xv, yv,i); //texto con método fill
-  ctx.strokeStyle = 'white';
-  ctx.strokeText(text, xv, yv, i);
-  ctx.stroke();
-  
 }
 
 function cleanCanvas() {
