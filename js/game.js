@@ -5,7 +5,7 @@ let mouse = false;
 let tipeGameSelected = 0;
 let turn;
 let cantPieces;
-let time = 60;
+let time = 600;
 
 
 let playerJ1 = {
@@ -22,7 +22,7 @@ let playerJ2 = {
 };
 
 
-function endTime(xv,xy){
+function endTime(){
 
   document.getElementById('countdown').innerHTML = time;
 
@@ -84,6 +84,8 @@ btnPiece3.addEventListener("click", function (e) {
 
 let btnRestart=document.getElementById("restart");
 btnRestart.addEventListener("click",function(e){restartGame()});
+
+
 function createGame(tipeGame) {
   wh = setUpCanvas();
   game = new Board(wh[0], wh[1], tipeGame);
@@ -106,7 +108,7 @@ function createGame(tipeGame) {
   for (let i = 1; i < game.cols; i++) {
     colspos[i] = colspos[i - 1] + game.colW;
   }
-  
+  endTime();
 }
 
 //detectar que el click se de dentro de la ficha del jugador
