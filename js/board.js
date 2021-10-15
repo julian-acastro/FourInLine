@@ -88,7 +88,7 @@ class Board {
   
   }
 
-  //funcion que limpia el canvas e imprime el turno y el tablero
+  //funcion que limpia el canvas y lo vuelve a dibujar
   refresh() {
     cleanCanvas();
     printTurn();

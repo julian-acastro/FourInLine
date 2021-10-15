@@ -5,7 +5,7 @@ let mouse = false;
 let tipeGameSelected = 0;//por defecto
 let turn;
 let cantPieces;
-let time;
+let setTime;
 
 
 let playerJ1 = {
@@ -21,6 +21,7 @@ let playerJ2 = {
   turns: 0
 };
 
+
 //Tiempo de juego 
 function endTime(){
 
@@ -32,9 +33,17 @@ function endTime(){
   }
   else{
     time = time - 1;
-    setTimeout(endTime, 1E3);
+    setTime=setTimeout(endTime, 1000);
   }
 }
+
+
+
+function myStopFunction() {
+  clearTimeout(setTime);
+}
+
+
 
 // Devuelve las referencias a los elementos por su  id
 // Establece el valor del atributo class del elemento (agrega o elimina) segun corresponda 
@@ -87,17 +96,17 @@ btnPiece3.addEventListener("click", function (e) {
   game.refresh();
 });
 
-// Inicia el juego con los valores seteados
+
 let btnRestart=document.getElementById("restart");
 btnRestart.addEventListener("click",function(e){restartGame()});
 let btnRestart2=document.getElementById("restart2");
 btnRestart2.addEventListener("click",function(e){restartGame()});
 
-
+// Inicia el juego con los valores seteados
 function createGame(tipeGame) {
   wh = setUpCanvas();
   game = new Board(wh[0], wh[1], tipeGame);//instancia de la clase Board
-  //seteo en j1 y j2 su pieza Y guardo el valor donde setea la pieza para crear fururas pieza
+  //seteo en j1 y j2 su pieza Y guardo el valor donde setea la pieza para crear futuras pieza
   playerJ2.piece = game.j2Piece;
   playerJ2.xv = game.j2Piece.xv;
   playerJ2.yv = game.j2Piece.yv;
@@ -105,6 +114,7 @@ function createGame(tipeGame) {
   playerJ1.xv = game.j1Piece.xv;
   playerJ1.yv = game.j1Piece.yv;
   turn = playerJ1.piece;// seteo a j1 por defecto en el turno para q el inicie el juego
+  time=300;
   printTurn();
   cantPieces=game.cols*game.rows;
   playerJ1.turns=cantPieces/2;
@@ -117,8 +127,7 @@ function createGame(tipeGame) {
   for (let i = 1; i < game.cols; i++) {
     colspos[i] = colspos[i - 1] + game.colW;
   }
-  time=300;
-  endTime();
+
 }
 
 // Detectar que el click se de dentro de la ficha del jugador
@@ -289,6 +298,5 @@ function restartGame(){
   let winnerContainer=document.getElementById("winnerContainer");
   winnerContainer.className += " hidden";
   btnGameContainer.classList.remove("hidden");
- 
-
+  myStopFunction();
 }
