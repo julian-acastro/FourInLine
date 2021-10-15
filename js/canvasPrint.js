@@ -6,6 +6,7 @@ img.src = "img/none.png";
 let img1;
 let img2;
 
+//Setea las fichas con las imagenes segun corresponda
 function setImgs(opc) {
   switch (opc) {
     case 1:
@@ -28,6 +29,8 @@ function setImgs(opc) {
       break;
   }
 }
+
+//Dibuja el tablero (fichas con otro valor) y las fichas con las imagenes
 function printPieces(x1, y1, rowH, name) {
   let source;
   switch (name) {
@@ -45,6 +48,7 @@ function printPieces(x1, y1, rowH, name) {
   ctx.drawImage(source, x1, y1, rowH, rowH);
 }
 
+
 function setUpCanvas() {
   canvas.classList.remove("hidden");
   visor.classList.remove("hidden");
@@ -59,6 +63,7 @@ function setUpCanvas() {
   return wh;
 }
 
+//Dibuja texto en el lienzo
 function printText(xv, yv, text,colorFill, colorStroke) {
   ctx.beginPath();
   ctx.fillStyle = colorFill; //color de relleno
@@ -70,8 +75,9 @@ function printText(xv, yv, text,colorFill, colorStroke) {
   ctx.stroke();
 }
 
+// Limpia el lienzo (como restablecer el ancho / alto, destruir el elemento del lienzo y luego volver a crearlo, etc.)
 function cleanCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height); //revisar, solo tiene que borrar el camino de fichas no todo
+  ctx.clearRect(0, 0, canvas.width, canvas.height); 
 }
 
 

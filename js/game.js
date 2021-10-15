@@ -2,17 +2,17 @@ let game; //en esta variable se instancia el tablero
 let wh = []; //guardo el ancho y alto del canvas
 let colspos = []; //guardo el valor x final de cada columna
 let mouse = false;
-let tipeGameSelected = 0;
+let tipeGameSelected = 0;//por defecto
 let turn;
 let cantPieces;
-let time = 600;
+let time = 60;
 
 
 let playerJ1 = {
   piece: null,
   xv: 0,
   yv: 0,
-  turns: 0//seteo cantidad de fichas
+  turns: 0
 };
 let playerJ2 = {
   piece: null,
@@ -21,7 +21,7 @@ let playerJ2 = {
   turns: 0
 };
 
-
+//Tiempo de juego 
 function endTime(){
 
   document.getElementById('countdown').innerHTML = time;
@@ -36,6 +36,9 @@ function endTime(){
   }
 }
 
+// Devuelve las referencias a los elementos por su  id
+// Establece el valor del atributo class del elemento (agrega o elimina) segun corresponda 
+// Setea la variable que determina el tipo de juego y lo crea con los valores que le corresponden
 let btnGameContainer = document.getElementById("btnGameContainer");
 let btnPiecesContainer = document.getElementById("btnPiecesContainer");
 
@@ -60,6 +63,7 @@ btn5InLine.addEventListener("click", function (e) {
   tipeGameSelected = 5;
 });
 
+// Inicia el juego con las filas y columnas correspondientes y las fichas elegidas (opcion 1, 2 o 3) 
 let btnPiece1 = document.getElementById("PieceOpc1");
 btnPiece1.addEventListener("click", function (e) {
   modal.className += " hidden";
@@ -82,13 +86,12 @@ btnPiece3.addEventListener("click", function (e) {
   game.refresh();
 });
 
+// Inicia el juego con los valores seteados
 let btnRestart=document.getElementById("restart");
 btnRestart.addEventListener("click",function(e){restartGame()});
-
-
-function createGame(tipeGame) {
+function createGame(tipeGame) { 
   wh = setUpCanvas();
-  game = new Board(wh[0], wh[1], tipeGame);
+  game = new Board(wh[0], wh[1], tipeGame);//instancia de la clase Board
   //seteo en j1 y j2 su pieza Y guardo el valor donde setea la pieza para crear fururas pieza
   playerJ2.piece = game.j2Piece;
   playerJ2.xv = game.j2Piece.xv;
@@ -101,17 +104,18 @@ function createGame(tipeGame) {
   cantPieces=game.cols*game.rows;
   playerJ1.turns=cantPieces/2;
   playerJ2.turns=cantPieces/2;
-  
+  visor.classList.remove("hidden");
+  endTime();
   
   //una vez instanciado el tablero lo mapeamos para detectar las columnas
   colspos[0] = game.posBoard + game.colW;
   for (let i = 1; i < game.cols; i++) {
     colspos[i] = colspos[i - 1] + game.colW;
   }
-  endTime();
+  
 }
 
-//detectar que el click se de dentro de la ficha del jugador
+// Detectar que el click se de dentro de la ficha del jugador
 canvas.onmousedown = function (e) {
   let rect = canvas.getBoundingClientRect();
   let xClick = e.clientX - rect.left; //posición x dentro del elemento.
@@ -126,6 +130,7 @@ canvas.onmousedown = function (e) {
   }
 };
 
+// Metodo que se dispara al mover la ficha 
 canvas.onmousemove = function (e) {
   let rect = canvas.getBoundingClientRect();
   let x2 = e.clientX - rect.left;
@@ -136,6 +141,10 @@ canvas.onmousemove = function (e) {
     game.refresh(); //limpia el tablero y lo vuelve a dibujar para no dibujar un "camino" fichas
   }
 };
+
+// Se dispara cuando se suelta la ficha, si la ficha no esta dentro del tablero vuelve a su posicion
+// Si la columna esta llena, se pide que elija otra
+// Si hay ganador llama a la funcion que muestra al ganador, sino cambia de turno
 
 canvas.onmouseup = function (e) {
   let xClick = e.offsetX;
@@ -176,6 +185,7 @@ canvas.onmouseup = function (e) {
 };
 
 
+// Cambia el turno y disminuye la cantidad de fichas de cada jugador
 function changeTurn() {
   
   if (turn.player == "j1") {
@@ -191,6 +201,8 @@ function changeTurn() {
   
 }
 
+// dibuja el texto que se encuentra en el lienzo 
+// Como asi tambien el turno y la cantidad de fichas restantes
 function printTurn() {
   let xv;
   let yv;
@@ -220,6 +232,7 @@ function printTurn() {
  
 }
 
+// Retorna las fichas a su posicion original si no las ubica en el tablero
 function restorePieces() {
   playerJ1.piece.xv = playerJ1.xv;
   playerJ1.piece.yv = playerJ1.yv;
@@ -227,15 +240,16 @@ function restorePieces() {
   playerJ2.piece.yv = playerJ2.yv;
 }
 
-
-
-
+// Devuelve las referencias a los elementos por su  id
+// Establece el valor del atributo class del elemento (agrega o elimina) segun corresponda 
+// Para mostrar al ganador del juego
 function winner(){
   canvas.className += " hidden";
   btnPiecesContainer.className += " hidden";
   modal.classList.remove("hidden");
   let winnerContainer=document.getElementById("winnerContainer");
   winnerContainer.classList.remove("hidden");
+  visor.className += " hidden";
   
 
   if(turn.player == "j1"){
@@ -247,6 +261,9 @@ function winner(){
   }
 }
 
+// Devuelve las referencias a los elementos por su  id
+// Establece el valor del atributo class del elemento (agrega o elimina) segun corresponda 
+// Para poder reiniciar el juego
 function restartGame(){
   canvas.className += " hidden";
   btnPiecesContainer.className += " hidden";

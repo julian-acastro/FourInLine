@@ -1,8 +1,10 @@
 class Board {
+  //constructor de la clase Board
   constructor(canvasW, canvasH, tipeGame) {
     this.canvasW = canvasW;
     this.canvasH = canvasH;
     this.tipeGame = tipeGame;
+    //inicializa los valores de las filas y columnas para los distintos tipos de juego
     switch (tipeGame) {
       case 6:
         this.rows = 8;
@@ -18,20 +20,20 @@ class Board {
         break;
     }
 
-    this.cantPieces = this.rows * this.cols;
+    this.cantPieces = this.rows * this.cols;//valor de las fichas totales 
     this.rowH = ((this.canvasH - 200) / this.rows); //calculo el diametro de las fichas
     this.colW = this.rowH + 5;
     this.posBoard = (this.canvasW - this.colW * this.cols) / 2; //centra el tablero en el canvas
     //ancho del canvas le resto el espacio q ocupa el tablero y lo divido por dos para centrarlo.
-    this.matr = new Array(this.cols);
-    this.makeBoard();
-    this.makePlayerPieces();
-    this.printBoard();
+    this.matr = new Array(this.cols);//se declara la matriz como un array de la cantidad de columnas
+    this.makeBoard();//se invoca la funcion que crea el tablero
+    this.makePlayerPieces();//invoca la funcion que crea las ficha de cada jugador 
+    this.printBoard(); 
     this.j1Piece;
     this.j2Piece;
   }
 
-
+//Crea el tablero 
   makeBoard() {
     let valX = this.posBoard; //valor de x teniendo en cuenta el radio y la posicion centrada del tablero
     let valY = 100; //valor en y
@@ -51,6 +53,8 @@ class Board {
       valY = 100; //reinicio el valor de y para comenzar la siguiente iteracion
     }
   }
+
+  //Determina los valores del tablero y las fichas de ambos jugadores
   printBoard() {
     for (let i = 0; i < this.matr.length; i++) {
       let obj1 = this.matr[i];
@@ -58,15 +62,12 @@ class Board {
         let obj2 = obj1[j];
         switch (obj2.player) {
           case "none":
-            printPieces(obj2.xv, obj2.yv, obj2.rowH, obj2.player); //rellenar con imagenes
+            printPieces(obj2.xv, obj2.yv, obj2.rowH, obj2.player); 
             break;
           case "j1":
             printPieces(obj2.xv, obj2.yv, obj2.rowH, obj2.player);
             break;
           case "j2":
-            printPieces(obj2.xv, obj2.yv, obj2.rowH, obj2.player);
-            break;
-          case "winner":
             printPieces(obj2.xv, obj2.yv, obj2.rowH, obj2.player);
             break;
         }
@@ -84,8 +85,10 @@ class Board {
       this.j2Piece.rowH,
       this.j2Piece.player
     );
-    //hacer funcion que imprima el resto del canvas 
+  
   }
+
+  //funcion que limpia el canvas e imprime el turno y el tablero
   refresh() {
     cleanCanvas();
     printTurn();
@@ -93,10 +96,9 @@ class Board {
     
   }
   
+  //crea la ficha de cada jugador con su posicion su tamaño y su nombre
   makePlayerPieces() {
    
-    
-    
     let posj1 = this.posBoard / 2 - this.rowH / 2;
     this.j1Piece = {
       xv: posj1,
@@ -116,8 +118,9 @@ class Board {
     
   }
 
+  //funcion para insertar la ficha dependiendo el valor de cada uno de los lugares del tablero
   insertPiece(numCol, player) {
-    let i = 0; //creo iterador
+    let i = 0; 
     
     let col = this.matr[numCol]; //guardo la columna donde inserto
     if (col[0].player === "none") {
@@ -137,6 +140,8 @@ class Board {
       return -1;
     }
   }
+
+  //Verifica si se cumple el 4, 5 o 6 en linea vertical, horizontal o diagonales.
   detectWinner(col, row) {
     let player = this.matr[col][row].player,
       iterator = col;
@@ -147,7 +152,7 @@ class Board {
     if (count < this.tipeGame) {
       count += this.check(col, row, -1, 0, player);
     }
-    console.log("horizontal= " + count);
+   
     //si no llego tipogame verifico verticalmente
     if (count < this.tipeGame) {
       count = 1;
@@ -155,7 +160,7 @@ class Board {
       if (count < this.tipeGame) {
         count += this.check(col, row, 0, -1, player);
       }
-      console.log("vertical= " + count);
+   
     }
     //si no llego tipogame verifico diagonal decendente
     if (count < this.tipeGame) {
@@ -164,7 +169,7 @@ class Board {
       if (count < this.tipeGame) {
         count += this.check(col, row, 1, 1, player);
       }
-      console.log("diagonal decendente= " + count);
+     
     }
     //si no llego tipogame verifico diagonal ascendente
     if (count < this.tipeGame) {
@@ -173,13 +178,15 @@ class Board {
       if (count < this.tipeGame) {
         count += this.check(col, row, 1, -1, player);
       }
-      console.log("diagonal ascendente= " + count);
+   
     }
     if(count>=this.tipeGame){
       return true;
     }else
       return false
   }
+
+  //Funcion que chequea la cantidad de fichas contiguas
   check(col, row, comportamientoCol, comportamientoRow, player) {
     let count = 0;
     let i = col + comportamientoCol;
